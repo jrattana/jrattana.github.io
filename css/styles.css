@@ -172,33 +172,6 @@ body {
     transform: translateY(-400px) scale(0.7);
 }
 
-/* Small clickable hitbox over just the balloon */
-.balloon-hitbox {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8%;
-    height: 12%;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 200;
-    padding: 0;
-}
-
-.balloon-hitbox:hover ~ .balloon-layer,
-.balloon-hitbox:hover + .balloon-layer {
-    filter: brightness(1.15);
-}
-
-/* When hitbox is hovered, brighten the balloon */
-.portal:has(.balloon-hitbox:hover) .balloon-layer {
-    filter: brightness(1.15);
-    transform: translateY(-2px);
-}
-
-
 /* ============================================
    RISING TEXT
    ============================================ */
@@ -643,6 +616,18 @@ body.subpage {
 /* Hide old balloon-pointer elements (pointers now created via ::before/::after on .balloon-help) */
 .balloon-pointer {
     display: none;
+}
+
+/* CV download link styling */
+.cv-link {
+    color: #7B68EE;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.cv-link:hover {
+    color: #9370DB;
 }
 
 /* Balloon positioning */
@@ -1200,229 +1185,6 @@ body.subpage {
 }
 
 /* ============================================
-   PROJECT BALLOONS
-   ============================================ */
-.balloons-container {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 5;
-}
-
-.project-balloon {
-    position: absolute;
-    bottom: -200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    pointer-events: auto;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    opacity: 0;
-}
-
-.project-balloon:hover {
-    transform: scale(1.08);
-    filter: brightness(1.1);
-}
-
-.project-balloon:hover .balloon-label {
-    opacity: 1;
-    transform: translateY(-5px);
-}
-
-/* Balloon image */
-.balloon-img {
-    width: 360px;
-    height: auto;
-    object-fit: contain;
-}
-
-/* Balloon label */
-.balloon-label {
-    margin-top: 10px;
-    font-family: 'Jersey 10', sans-serif;
-    font-size: 1.1rem;
-    color: var(--gold-light);
-    text-align: center;
-    opacity: 0;
-    transition: all 0.3s ease;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-    letter-spacing: 0.05em;
-}
-
-/* Float animation */
-@keyframes floatUp {
-    0% {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(calc(-100vh - 300px));
-        opacity: 1;
-    }
-}
-
-@keyframes gentleSway {
-    0%, 100% { transform: translateX(0) rotate(-2deg); }
-    50% { transform: translateX(10px) rotate(2deg); }
-}
-
-.project-balloon.floating {
-    animation: 
-        floatUp 8s ease-out forwards,
-        gentleSway 4s ease-in-out infinite;
-}
-
-.project-balloon.arrived {
-    animation: gentleSway 4s ease-in-out infinite;
-    opacity: 1;
-}
-
-/* ============================================
-   MODAL
-   ============================================ */
-.modal {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s ease;
-}
-
-.modal.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(10px);
-}
-
-.modal-content {
-    position: relative;
-    background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 20px;
-    max-width: 550px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    transform: scale(0.9) translateY(30px);
-    transition: transform 0.4s ease;
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        0 25px 80px rgba(0, 0, 0, 0.5);
-}
-
-.modal.active .modal-content {
-    transform: scale(1) translateY(0);
-}
-
-.modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    color: var(--cream);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-close:hover {
-    background: var(--gold);
-    color: var(--black);
-    border-color: var(--gold);
-}
-
-.modal-body {
-    padding: 50px 40px;
-}
-
-.modal-body h2 {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--gold);
-    margin-bottom: 10px;
-}
-
-.modal-body .subtitle {
-    font-family: var(--font-body);
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 25px;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-}
-
-.modal-body p {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.85);
-    margin-bottom: 20px;
-}
-
-.modal-body .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 25px;
-}
-
-.modal-body .tag {
-    padding: 8px 16px;
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 30px;
-    font-size: 0.85rem;
-    color: var(--gold-light);
-    letter-spacing: 0.05em;
-}
-
-.modal-body .links {
-    margin-top: 30px;
-    display: flex;
-    gap: 15px;
-}
-
-.modal-body .link-btn {
-    padding: 12px 24px;
-    background: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    text-decoration: none;
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    letter-spacing: 0.1em;
-}
-
-.modal-body .link-btn:hover {
-    background: var(--gold);
-    color: var(--black);
-}
-
-/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 768px) {
@@ -1546,4 +1308,16 @@ video.carousel-item {
 
 .dot.active {
     background: rgba(180, 160, 213, 0.9);
+}
+
+/* CV download link styling */
+.cv-link {
+    color: #7B68EE;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.cv-link:hover {
+    color: #9370DB;
 }
