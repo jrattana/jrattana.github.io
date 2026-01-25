@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Projects | Jerica Rattana</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="subpage">
+    <!-- Name header -->
+    <header class="name-header">
+        <a href="index.html" style="text-decoration: none;">
+            <h1 class="name">Jerica Rattana</h1>
+            <p class="title">Designer & Maker</p>
+        </a>
+    </header>
+
+    <!-- Side navigation -->
+    <nav class="side-nav visible">
+        <a href="about.html" class="nav-item">About Me</a>
+        <a href="projects.html" class="nav-item active">Personal Projects</a>
+    </nav>
+
+    <!-- Mac Window styled page -->
+    <div class="page-window">
+        <!-- Layered border structure -->
+        <div class="window-bg"></div>
+        <div class="window-border-left"></div>
+        <div class="window-border-right"></div>
+        <div class="window-lime-border"></div>
+        <div class="window-inner-frame"></div>
+        
+        <!-- Title bar -->
+        <div class="title-bar">
+            <div class="title-bar-bg">
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+            </div>
+            <!-- Window title -->
+            <div class="window-title-container">
+                <span class="window-title">Personal Projects</span>
+            </div>
+            <!-- Close box - links back home -->
+            <a href="index.html" class="close-box">
+                <div class="close-icon"></div>
+            </a>
+        </div>
+        
+        <!-- Content area -->
+        <div class="window-content">
+            <h2>WIEBA - Where Is Every Body At?!</h2>
+            <p class="project-subtitle">Project lead and hardware engineer</p>
+            <p class="project-date">Fall 2025</p>
+            <br>
+            
+            <!-- Media Carousel Gallery -->
+            <div class="media-carousel" id="mediaCarousel">
+                <div class="carousel-container">
+                    <img src="images/wieba/carousel/0.jpg" alt="WIEBA Project Photo 1" class="carousel-item active" data-index="0">
+                    <img src="images/wieba/carousel/1.jpg" alt="WIEBA Project Photo 2" class="carousel-item" data-index="1">
+                    <img src="images/wieba/carousel/2.png" alt="WIEBA Project Photo 3" class="carousel-item" data-index="2">
+                    <img src="images/wieba/carousel/3.png" alt="WIEBA Project Photo 4" class="carousel-item" data-index="3">
+                    <img src="images/wieba/carousel/4.jpeg" alt="WIEBA Project Photo 5" class="carousel-item" data-index="4">
+                    <img src="images/wieba/carousel/5.jpeg" alt="WIEBA Project Photo 6" class="carousel-item" data-index="5">
+                    <img src="images/wieba/carousel/6.jpeg" alt="WIEBA Project Photo 7" class="carousel-item" data-index="6">
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn">&#10094;</button>
+                    <div class="carousel-dots">
+                        <span class="dot active" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <span class="dot" data-index="2"></span>
+                        <span class="dot" data-index="3"></span>
+                        <span class="dot" data-index="4"></span>
+                        <span class="dot" data-index="5"></span>
+                        <span class="dot" data-index="6"></span>
+                    </div>
+                    <button class="carousel-btn next-btn">&#10095;</button>
+                </div>
+            </div>
+            <br><br>
+            
+            <h3>WHAT IS IT</h3>
+            <br>
+            <p>Where Is Every Body At?! (WIEBA) is a technical art installation that visualizes real-time crowd density across multiple floors of a hotel during a large immersive art conference.</p>
+            <br>
+            <p>For this conference, specific floors of the hotel are dedicated to immersive installations. Moving between floors via elevator is often unpredictable - one floor may be densely packed, while another is near empty. WIEBA is a functional art piece that uses environmental sensors to approximate how many people are on each floor. That information is then relayed via a local network to a physical LED display located by the main floor elevators. The LED display is updated in realtime to provide attendees with an approximation of floor density.</p>
+            <br>
+            <p>I served as the project lead and hardware engineer, leading a five-person team to design, build, deploy, and calibrate a distributed sensing and visualization system under real-world constraints.</p>
+            <br><br>
+            
+            <h3>HOW IT WORKED</h3>
+            <br>
+            <p>WIEBA was implemented as a distributed sensor network feeding a centralized physical display.</p>
+            <br>
+            
+            <h4>SENSORS</h4>
+            <br>
+            <!-- Photo gallery with balloon help bubbles -->
+            <div class="photo-with-balloons" id="probeGallery">
+                <!-- Clickable image gallery -->
+                <div class="gallery-image-container">
+                    <img src="images/wieba/solder-job.png" alt="Solder job" class="gallery-image active" data-index="0">
+                    <img src="images/wieba/with-headers.png" alt="PCB with headers attached" class="gallery-image" data-index="1">
+                    <img src="images/wieba/with-boards.png" alt="Completed probe with components" class="gallery-image" data-index="2">
+                </div>
+                
+                <!-- Balloon help bubbles - RIGHT SIDE -->
+                <div class="balloon-help balloon-right" style="top: 24%;">
+                    <span class="balloon-icon">❖</span>
+                    <span class="balloon-title">Display Screen</span>
+                    <p>OLED display showing real-time sensor readings</p>
+                    <div class="balloon-pointer pointer-left"></div>
+                </div>
+                
+                <div class="balloon-help balloon-right" style="top: 55%;">
+                    <span class="balloon-icon">❖</span>
+                    <span class="balloon-title">dB Sensor</span>
+                    <p>Microphone module for ambient sound level detection</p>
+                    <div class="balloon-pointer pointer-left"></div>
+                </div>
+                
+                <div class="balloon-help balloon-right" style="top: 74%;">
+                    <span class="balloon-title">CO2 & Environment Sensors</span>
+                    <p>SCD40 CO2 sensor and BME280 for temperature/humidity</p>
+                    <div class="balloon-pointer pointer-left"></div>
+                </div>
+                
+                <!-- Balloon help bubble - LEFT SIDE (back of board) -->
+                <div class="balloon-help balloon-left" style="top: 35%;">
+                    <span class="balloon-icon">❖</span>
+                    <span class="balloon-title">Meshtastic + ESP32</span>
+                    <p>Seeed Studio XIAO ESP32-C3 microcontroller with Wio-SX1262 LoRa module</p>
+                    <div class="balloon-pointer pointer-right"></div>
+                </div>
+            </div>
+            <p class="gallery-caption" id="galleryCaption">Solder connections on the back of the perfboard</p>
+            <br>
+            <p>Two probe form factors (large and small) were deployed per floor - one in the rotunda and one in the hallway - to sample different spatial conditions. A total of 13 probes were built; I hand-soldered and assembled 7 of them. I designed the enclosures for the probes in Fusion 360.</p>
+            <br>
+            <p>Sensor data was transmitted over a local network to a central system, which aggregated readings and mapped them to a bar graph style LED display representing relative occupancy per floor.</p>
+            <br><br>
+            
+            <h4>OCCUPANCY ESTIMATION & CALIBRATION</h4>
+            <br>
+            <p>Through earlier experiments at a separate event, the team identified CO2 concentration as the strongest proxy for human presence compared to temperature, humidity or sound alone.</p>
+            <br>
+            <p>Initial CO2 data was used to estimate rough occupancy thresholds. Once on site, we conducted a live calibration period by:</p>
+            <ul>
+                <li>observing actual crowd sizes in specific spaces</li>
+                <li>comparing observed occupancy with real-time CO2 readings</li>
+                <li>adjusting threshold values to align sensor output with perceived density</li>
+            </ul>
+            <br>
+            <p>This process allowed us to tune the visualization to the specific airflow, volume, and usage patterns of the hotel environment.</p>
+            <br><br>
+            
+            <h4>NETWORKING & DEPLOYMENT CONSTRAINTS</h4>
+            <br>
+            <p>The original system design relied on a Meshtastic mesh network to transmit data between floors. During on-site testing, we quickly discovered that signal propagation through the hotel structure was insufficient for reliable communication.</p>
+            <br>
+            <p>To ensure robustness and meet deployment timelines, we pivoted to using the hotel's WiFi network. While less exciting than intended, this decision prioritized successful deployment.</p>
+            <br><br>
+            
+            <h4>PHYSICAL DISPLAY & FABRICATION</h4>
+            <br>
+            <p>The main display was constructed as a custom, bookcase-style plywood enclosure with an acrylic cover. I designed the display graphic in Inkscape. Addressable LEDs were attached to each row. Cardboard baffles were used to segment and prevent light bleed. The display translated aggregated sensor data into an intuitive, glanceable representation of floor-by-floor occupancy.</p>
+            <br><br>
+            
+            <h3>MY ROLE</h3>
+            <br>
+            <p>As the project lead, I:</p>
+            <ul>
+                <li>set technical direction and consulted on system architecture</li>
+                <li>coordinated task ownership across the team</li>
+                <li>made final decisions on hardware, networking, and deployment strategy</li>
+                <li>led on-site installation and calibration</li>
+            </ul>
+            <br>
+            <p>As a hardware engineer, I:</p>
+            <ul>
+                <li>designed and fabricated the sensor probes</li>
+                <li>designed and assembled the probe enclosures</li>
+                <li>designed the display graphic</li>
+            </ul>
+            <br><br>
+            
+            <h3>OUTCOME</h3>
+            <br>
+            <p>It worked! We managed to promise and deliver a real-time occupancy visualization. Some confounding variables to note are things like the ventilation system. Our least accurate reading was in the pool area. As the WiFi signal did not extend to the indoor pool area, the sensor probe was placed in the hallway leading to the pool instead. This area was well ventilated, and people did not congregate in the hallway for very long, leading to our most inaccurate reading.</p>
+        </div>
+        
+        <!-- Vertical scrollbar -->
+        <div class="scrollbar-v">
+            <div class="scroll-btn scroll-up"></div>
+            <div class="scroll-track-v">
+                <div class="scroll-box-v"></div>
+            </div>
+            <div class="scroll-btn scroll-down"></div>
+        </div>
+        
+        <!-- Horizontal scrollbar (decorative) -->
+        <div class="scrollbar-h">
+            <div class="scroll-btn scroll-left"></div>
+            <div class="scroll-track-h"></div>
+            <div class="scroll-btn scroll-right"></div>
+        </div>
+        
+        <!-- Resize button (decorative) -->
+        <div class="resize-btn"></div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+

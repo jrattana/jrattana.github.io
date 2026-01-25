@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Journey Ahead</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Name header -->
+    <header class="name-header">
+        <h1 class="name">Jerica Rattana</h1>
+        <p class="title">Designer & Maker</p>
+    </header>
+
+    <div class="scene">
+        <!-- Main circular portal with layered images -->
+        <div class="portal">
+            <!-- Background layer -->
+            <img src="images/portal/background-no-black.png" alt="Road to horizon" class="portal-layer background-layer">
+            
+            <!-- Car layer -->
+            <img src="images/portal/background-car.png" alt="" class="portal-layer car-layer">
+            
+            <!-- Balloon image layer (auto-animates on load) -->
+            <img src="images/portal/just-balloon.png" alt="Hot air balloon" class="portal-layer balloon-layer" id="balloonImage">
+        </div>
+
+        <!-- Rising text on the left -->
+        <p class="rising-text" id="risingText">Hello, welcome. I am a mechanical engineer based in the San Francisco Bay Area.</p>
+
+        <!-- Sub-headings on the right -->
+        <nav class="side-nav" id="sideNav">
+            <a href="about.html" class="nav-item">About Me</a>
+            <a href="projects.html" class="nav-item">Personal Projects</a>
+        </nav>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
