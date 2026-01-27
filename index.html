@@ -18,6 +18,9 @@
     </header>
 
     <div class="scene">
+        <!-- Audio waveform canvas (behind portal) -->
+        <canvas id="waveformCanvas" class="waveform-canvas"></canvas>
+        
         <!-- Main circular portal with layered images -->
         <div class="portal">
             <!-- Background layer -->
@@ -38,6 +41,32 @@
             <a href="about.html" class="nav-item">About Me</a>
             <a href="projects.html" class="nav-item">Personal Projects</a>
         </nav>
+    </div>
+
+    <!-- Hidden audio element -->
+    <audio id="backgroundAudio" preload="auto"></audio>
+    
+    <!-- Audio controls bar -->
+    <div class="audio-bar" id="audioBar">
+        <!-- Band bio note (appears above controls when playing) -->
+        <div class="band-bio" id="bandBio"></div>
+        
+        <!-- Play/Pause button -->
+        <button id="audioControl" class="audio-control" aria-label="Play/Pause">
+            <span class="play-icon">▶</span>
+            <span class="pause-icon">❚❚</span>
+        </button>
+        
+        <!-- Skip button -->
+        <button id="skipControl" class="skip-control" aria-label="Skip">
+            <span class="skip-icon"></span>
+        </button>
+        
+        <!-- Track info -->
+        <div class="track-info">
+            <span class="track-title" id="trackTitle">Loading...</span>
+            <span class="track-artist" id="trackArtist"></span>
+        </div>
     </div>
 
     <script src="js/script.js"></script>

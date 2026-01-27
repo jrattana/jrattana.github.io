@@ -110,6 +110,256 @@ body {
 }
 
 /* ============================================
+   AUDIO WAVEFORM VISUALIZATION
+   ============================================ */
+.waveform-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Audio Controls Bar */
+.audio-bar {
+    position: fixed;
+    bottom: 25px;
+    left: -300px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+    opacity: 0;
+    transition: none;
+    /* For positioning the band bio note */
+    flex-wrap: wrap;
+}
+
+.audio-bar.rising {
+    animation: audioBarSlideIn 1.5s ease-out forwards;
+}
+
+/* Final state after animation (no animation, just position) */
+.audio-bar.risen {
+    left: 25px;
+    opacity: 1;
+}
+
+@keyframes audioBarSlideIn {
+    0% {
+        left: -300px;
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        left: 25px;
+        opacity: 1;
+    }
+}
+
+/* Play/Pause Button - Retro Mac OS Style */
+.audio-control {
+    width: 36px;
+    height: 36px;
+    background: #D9D9D9;
+    border: 2px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        inset -2px -2px 0 #808080,
+        inset 2px 2px 0 #fff;
+    flex-shrink: 0;
+}
+
+.audio-control:hover {
+    background: #E8E8E8;
+}
+
+.audio-control:active {
+    box-shadow: 
+        inset 2px 2px 0 #808080,
+        inset -2px -2px 0 #fff;
+}
+
+.audio-control .play-icon,
+.audio-control .pause-icon {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+/* Play icon - pixel art arrow */
+.audio-control .play-icon {
+    display: block;
+    width: 14px;
+    height: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='18' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='2' height='18' fill='%23000'/%3E%3Crect x='2' y='0' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='16' width='2' height='2' fill='%23000'/%3E%3Crect x='4' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='4' y='14' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='6' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='10' width='2' height='2' fill='%23000'/%3E%3Crect x='10' y='8' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='4' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='2' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='2' y='10' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='12' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='2' y='14' width='2' height='2' fill='%23fff'/%3E%3Crect x='4' y='4' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='4' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='4' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='4' y='10' width='2' height='2' fill='%23fff'/%3E%3Crect x='4' y='12' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='6' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='6' y='10' width='2' height='2' fill='%23fff'/%3E%3Crect x='8' y='8' width='2' height='2' fill='%23fff'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 2px;
+}
+
+/* Pause icon - two pixel art bars */
+.audio-control .pause-icon {
+    display: none;
+    width: 14px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='16' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='6' height='16' fill='%23000'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='4' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='2' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='2' y='10' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='12' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='8' y='0' width='6' height='16' fill='%23000'/%3E%3Crect x='10' y='2' width='2' height='2' fill='%23fff'/%3E%3Crect x='10' y='4' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='10' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='10' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='10' y='10' width='2' height='2' fill='%23fff'/%3E%3Crect x='10' y='12' width='2' height='2' fill='%23B4A0D5'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.audio-control.playing .play-icon {
+    display: none;
+}
+
+.audio-control.playing .pause-icon {
+    display: block;
+}
+
+/* Skip Button - Retro Mac OS Style */
+.skip-control {
+    width: 36px;
+    height: 36px;
+    background: #D9D9D9;
+    border: 2px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        inset -2px -2px 0 #808080,
+        inset 2px 2px 0 #fff;
+    flex-shrink: 0;
+}
+
+.skip-control:hover {
+    background: #E8E8E8;
+}
+
+.skip-control:active {
+    box-shadow: 
+        inset 2px 2px 0 #808080,
+        inset -2px -2px 0 #fff;
+}
+
+/* Skip icon - pixel art double arrow */
+.skip-control .skip-icon {
+    display: block;
+    width: 20px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='16' shape-rendering='crispEdges'%3E%3C!-- First arrow outline --%3E%3Crect x='0' y='0' width='2' height='16' fill='%23000'/%3E%3Crect x='2' y='0' width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='14' width='2' height='2' fill='%23000'/%3E%3Crect x='4' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='4' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='6' y='10' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='6' width='2' height='2' fill='%23000'/%3E%3Crect x='8' y='8' width='2' height='2' fill='%23000'/%3E%3C!-- First arrow fill --%3E%3Crect x='2' y='2' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='4' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='2' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='2' y='10' width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='12' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='4' y='4' width='2' height='2' fill='%23fff'/%3E%3Crect x='4' y='6' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='4' y='8' width='2' height='2' fill='%23fff'/%3E%3Crect x='4' y='10' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='6' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3C!-- Second arrow outline --%3E%3Crect x='10' y='0' width='2' height='16' fill='%23000'/%3E%3Crect x='12' y='0' width='2' height='2' fill='%23000'/%3E%3Crect x='12' y='14' width='2' height='2' fill='%23000'/%3E%3Crect x='14' y='2' width='2' height='2' fill='%23000'/%3E%3Crect x='14' y='12' width='2' height='2' fill='%23000'/%3E%3Crect x='16' y='4' width='2' height='2' fill='%23000'/%3E%3Crect x='16' y='10' width='2' height='2' fill='%23000'/%3E%3Crect x='18' y='6' width='2' height='2' fill='%23000'/%3E%3Crect x='18' y='8' width='2' height='2' fill='%23000'/%3E%3C!-- Second arrow fill --%3E%3Crect x='12' y='2' width='2' height='2' fill='%23fff'/%3E%3Crect x='12' y='4' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='12' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='12' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='12' y='10' width='2' height='2' fill='%23fff'/%3E%3Crect x='12' y='12' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='14' y='4' width='2' height='2' fill='%23fff'/%3E%3Crect x='14' y='6' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='14' y='8' width='2' height='2' fill='%23fff'/%3E%3Crect x='14' y='10' width='2' height='2' fill='%23B4A0D5'/%3E%3Crect x='16' y='6' width='2' height='2' fill='%23fff'/%3E%3Crect x='16' y='8' width='2' height='2' fill='%23B4A0D5'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* Track Info */
+/* Band Bio Note - Retro Mac OS Style */
+.band-bio {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: #D9D9D9;
+    border: 2px solid #000;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: #000;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    max-width: 260px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    box-shadow: 
+        inset -2px -2px 0 #808080,
+        inset 2px 2px 0 #fff;
+}
+
+/* Corner brackets using CSS gradients */
+.band-bio::before,
+.band-bio::after {
+    content: '';
+    position: absolute;
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    pointer-events: none;
+}
+
+/* Top-left and bottom-right corners */
+.band-bio::before {
+    top: 6px;
+    left: 6px;
+    background:
+        /* Top-left corner */
+        linear-gradient(to right, #555 0, #555 2px, transparent 2px) 0 0 / 12px 2px no-repeat,
+        linear-gradient(to bottom, #555 0, #555 2px, transparent 2px) 0 0 / 2px 12px no-repeat,
+        /* Bottom-right corner */
+        linear-gradient(to left, #555 0, #555 2px, transparent 2px) 100% 100% / 12px 2px no-repeat,
+        linear-gradient(to top, #555 0, #555 2px, transparent 2px) 100% 100% / 2px 12px no-repeat;
+}
+
+/* Top-right and bottom-left corners */
+.band-bio::after {
+    top: 6px;
+    right: 6px;
+    background:
+        /* Top-right corner */
+        linear-gradient(to left, #555 0, #555 2px, transparent 2px) 100% 0 / 12px 2px no-repeat,
+        linear-gradient(to bottom, #555 0, #555 2px, transparent 2px) 100% 0 / 2px 12px no-repeat,
+        /* Bottom-left corner */
+        linear-gradient(to right, #555 0, #555 2px, transparent 2px) 0 100% / 12px 2px no-repeat,
+        linear-gradient(to top, #555 0, #555 2px, transparent 2px) 0 100% / 2px 12px no-repeat;
+}
+
+.band-bio.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.track-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-left: 8px;
+}
+
+.track-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+}
+
+.track-artist {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+    opacity: 0.8;
+    line-height: 1.2;
+}
+
+
+/* ============================================
    CIRCULAR PORTAL
    ============================================ */
 .portal {
@@ -192,7 +442,7 @@ body {
 }
 
 .rising-text.rising {
-    animation: textSlideIn 6s ease-out forwards;
+    animation: textSlideIn 1.5s ease-out forwards;
 }
 
 /* Final state after animation (no animation) */
@@ -208,7 +458,7 @@ body {
         transform: translateY(-50%);
         opacity: 0;
     }
-    10% {
+    20% {
         opacity: 1;
     }
     100% {
@@ -314,10 +564,13 @@ body {
    ============================================ */
 body.subpage {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     min-height: 100vh;
     overflow: hidden;
+    padding-top: 70px;
+    padding-bottom: 80px;
+    box-sizing: border-box;
 }
 
 
@@ -325,10 +578,10 @@ body.subpage {
 .page-window {
     position: relative;
     width: min(95vw, 1100px);
-    height: calc(min(90vh, 800px) - 60px);
+    height: calc(100vh - 150px);
+    max-height: 800px;
     z-index: 10;
     background: var(--cream);
-    margin-top: 60px;
 }
 
 /* Apply Mac window pseudo-elements to page-window */
@@ -616,18 +869,6 @@ body.subpage {
 /* Hide old balloon-pointer elements (pointers now created via ::before/::after on .balloon-help) */
 .balloon-pointer {
     display: none;
-}
-
-/* CV download link styling */
-.cv-link {
-    color: #7B68EE;
-    text-decoration: underline;
-    font-weight: 600;
-    transition: color 0.2s ease;
-}
-
-.cv-link:hover {
-    color: #9370DB;
 }
 
 /* Balloon positioning */
