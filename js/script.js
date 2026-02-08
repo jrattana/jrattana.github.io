@@ -40,8 +40,8 @@ const playlist = [
 
 // Band bios
 const bandBios = {
-    'Thrown-Out Bones': 'Thrown-Out Bones kindly authorized the use of their music. Check them out. Based in the SF Bay Area.',
-    'Stagefright': 'Stagefright kindly authorized the use of their music. Check them out. Based in Wonder Valley, CA.'
+    'Thrown-Out Bones': 'Thrown-Out Bones kindly authorized the use of their music. <a href="https://www.thrownoutbones.com/" target="_blank">Check them out.</a> Based in the SF Bay Area.',
+    'Stagefright': 'Stagefright kindly authorized the use of their music. <a href="https://stagefright.bandcamp.com/" target="_blank">Check them out.</a> Based in Wonder Valley, CA.'
 };
 
 let shuffledPlaylist = [];
@@ -138,13 +138,26 @@ function initAudioWaveform() {
         if (bandBio) {
             const bio = bandBios[track.artist];
             if (bio) {
-                bandBio.textContent = bio;
+                // Create bio content with close button
+                bandBio.innerHTML = `<button class="band-bio-close" aria-label="Close">×</button>${bio}`;
+                
+                // Add close button event listener
+                const closeBtn = bandBio.querySelector('.band-bio-close');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        bandBio.classList.remove('visible');
+                        bioShown = false;
+                        bioClosed = true; // Track that user manually closed the bio
+                    });
+                }
+                
                 // Only show if audio is playing
                 if (showBio && !audio.paused) {
                     bandBio.classList.add('visible');
                 }
             } else {
-                bandBio.textContent = '';
+                bandBio.innerHTML = '';
                 bandBio.classList.remove('visible');
             }
         }
@@ -155,13 +168,15 @@ function initAudioWaveform() {
     
     // Track if bio has been shown (persists until track change)
     let bioShown = false;
+    let bioClosed = false; // Track if user manually closed the bio
     
-    // Update bio visibility - once shown, stays visible until track changes
+    // Update bio visibility - once shown, stays visible until track changes or user closes
     function updateBioVisibility(forceShow = false) {
         if (bandBio) {
             const track = shuffledPlaylist[currentTrackIndex];
             const bio = bandBios[track.artist];
-            if (bio && (forceShow || bioShown)) {
+            // Don't show if user manually closed it for this track
+            if (bio && (forceShow || bioShown) && !bioClosed) {
                 bioShown = true;
                 bandBio.classList.add('visible');
             }
@@ -171,6 +186,7 @@ function initAudioWaveform() {
     // Reset bio visibility (called when track changes)
     function resetBioVisibility() {
         bioShown = false;
+        bioClosed = false; // Reset closed state for new track
         if (bandBio) {
             bandBio.classList.remove('visible');
         }
@@ -368,8 +384,8 @@ function drawWaveform(ctx, canvas) {
     const portalRadius = portalRect.width / 2;
     
     const baseRadius = portalRadius + 20;
-    const maxBarHeight = 80;
-    const minBarHeight = 3;
+    const maxBarHeight = 100;
+    const minBarHeight = 5;
     
     // Fixed playhead position at top (12 o'clock)
     const playheadAngle = -Math.PI / 2;
@@ -394,27 +410,27 @@ function drawWaveform(ctx, canvas) {
         const x2 = centerX + Math.cos(angle) * outerRadius;
         const y2 = centerY + Math.sin(angle) * outerRadius;
         
-        // Draw bar with gradient
+        // Draw bar with gradient - more prominent colors
         const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
-        const alpha = 0.4 + amplitude * 0.6;
+        const alpha = 0.7 + amplitude * 0.3;
         gradient.addColorStop(0, `rgba(212, 175, 55, ${alpha * ageFade})`);
-        gradient.addColorStop(0.5, `rgba(244, 228, 188, ${alpha * ageFade})`);
-        gradient.addColorStop(1, `rgba(212, 175, 55, ${alpha * 0.3 * ageFade})`);
+        gradient.addColorStop(0.5, `rgba(255, 235, 180, ${alpha * ageFade})`);
+        gradient.addColorStop(1, `rgba(212, 175, 55, ${alpha * 0.5 * ageFade})`);
         
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
         ctx.strokeStyle = gradient;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         ctx.stroke();
     }
     
-    // Draw subtle base circle
+    // Draw subtle base circle - slightly more visible
     ctx.beginPath();
     ctx.arc(centerX, centerY, baseRadius - 2, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.1)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(212, 175, 55, 0.25)';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
     
     // Draw playhead indicator at top
