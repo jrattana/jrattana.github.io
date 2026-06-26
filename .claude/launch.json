@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["/Users/jericarattana/Documents/Claude/Projects/Portfolio/.claude/serve.sh"],
+      "port": 8080,
+      "autoPort": true
+    }
+  ]
+}
