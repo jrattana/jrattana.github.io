@@ -54,8 +54,8 @@
 
         <!-- Mac OS style menu bar -->
         <div class="project-menubar">
-            <button class="menu-item active" data-project="wieba">WIEBA</button>
-            <button class="menu-item" data-project="litebrite">Lite-Brite Ritual</button>
+            <button class="menu-item active" data-project="litebrite">Lite-Brite Ritual</button>
+            <button class="menu-item" data-project="wieba">WIEBA</button>
             <div class="menubar-end-box"></div>
         </div>
 
@@ -71,8 +71,8 @@
             <div class="project-pane" id="projectPane">
 
                 <!-- ===== WIEBA ===== -->
-                <div class="project-content" data-project="wieba">
-                    <h2>WIEBA — Where Is Every Body At?!</h2>
+                <div class="project-content hidden" data-project="wieba">
+                    <h2>Where is Every Body At?!</h2>
                     <p class="project-subtitle">Project lead and hardware engineer</p>
                     <p class="project-date">Fall 2025</p>
 
@@ -106,9 +106,9 @@
                         <h3>WHAT IS IT</h3>
                         <p>Where Is Every Body At?! (WIEBA) is a technical art installation that visualizes real-time crowd density across multiple floors of a hotel during a large immersive art conference.</p>
                         <br>
-                        <p>For this conference, specific floors of the hotel are dedicated to immersive installations. Moving between floors via elevator is often unpredictable - one floor may be densely packed, while another is near empty. WIEBA is a functional art piece that uses environmental sensors to approximate how many people are on each floor. That information is then relayed via a local network to a physical LED display located by the main floor elevators. The LED display is updated in realtime to provide attendees with an approximation of floor density.</p>
+                        <p>Specific floors of the hotel are dedicated to immersive installations. WIEBA is a functional art piece that uses environmental sensors to approximate how many people are on each floor. That information is then relayed via a local network to a physical LED display located by the main floor elevators. The LED display is updated in realtime to provide attendees with an approximation of floor density.</p>
                         <br>
-                        <p>I served as the project lead and hardware engineer, leading a five-person team to design, build, deploy, and calibrate a distributed sensing and visualization system under real-world constraints.</p>
+                        <p>I served as the <strong>project lead</strong> and hardware engineer, leading a five-person team to design, build, deploy, and calibrate a distributed sensing and visualization system under real-world constraints.</p>
                     </section>
 
                     <section id="wieba-how-it-worked">
@@ -170,14 +170,14 @@
 
                         <section id="wieba-networking">
                             <h4>NETWORKING & DEPLOYMENT CONSTRAINTS</h4>
-                            <p>The original system design relied on a Meshtastic mesh network to transmit data between floors. During on-site testing, we quickly discovered that signal propagation through the hotel structure was insufficient for reliable communication.</p>
+                            <p>The original system design relied on a Meshtastic mesh network to transmit data between floors. During on-site testing, we quickly realized that the signal wasn't traveling very far through the concrete walls of the building.</p>
                             <br>
-                            <p>To ensure robustness and meet deployment timelines, we pivoted to using the hotel's WiFi network. While less exciting than intended, this decision prioritized successful deployment.</p>
+                            <p>We pivoted to using the hotel's WiFi network. While less exciting than intended, this decision prioritized successful deployment.</p>
                         </section>
 
                         <section id="wieba-fabrication">
                             <h4>PHYSICAL DISPLAY & FABRICATION</h4>
-                            <p>The main display was constructed as a custom, bookcase-style plywood enclosure with an acrylic cover. I designed the display graphic in Inkscape. Addressable LEDs were attached to each row. Cardboard baffles were used to segment and prevent light bleed. The display translated aggregated sensor data into an intuitive, glanceable representation of floor-by-floor occupancy.</p>
+                            <p>The main display was constructed as a custom, bookcase-style plywood enclosure with an acrylic cover. I designed the display graphic in Inkscape. Addressable LEDs were mounted in each row. Cardboard baffles were used to segment and prevent light bleed. The display translated aggregated sensor data into an intuitive, glanceable representation of floor-by-floor occupancy.</p>
                         </section>
                     </section>
 
@@ -203,26 +203,53 @@
                         <h3>OUTCOME</h3>
                         <p>It worked! We managed to promise and deliver a real-time occupancy visualization. Some confounding variables to note are things like the ventilation system. Our least accurate reading was in the pool area. As the WiFi signal did not extend to the indoor pool area, the sensor probe was placed in the hallway leading to the pool instead. This area was well ventilated, and people did not congregate in the hallway for very long, leading to our most inaccurate reading.</p>
                     </section>
+
+                    <section id="wieba-credits">
+                        <h3>CREDITS</h3>
+                        <p>Nathan, engineering lead. Wesley, Jared, John, and Matt, smart hands. Liina, frontend engineer. Zach, sign builder.</p>
+                    </section>
                 </div>
 
                 <!-- ===== LITE-BRITE RITUAL ===== -->
-                <div class="project-content hidden" data-project="litebrite">
-                    <h2>Lite-Brite Ritual</h2>
-                    <p class="project-subtitle">Coming soon</p>
-                    <p class="project-date">2025</p>
-                    <br>
+                <div class="project-content" data-project="litebrite">
+                    <h2>Illumination Lite-Rite</h2>
+                    <p class="project-date">Summer 2026</p>
+
+                    <section id="litebrite-context">
+                        <h4>CONTEXT</h4>
+                        <p>Lite-brite: a toy that consists of a light box and pegs. Small coloured pegs are inserted into the box and are black lit to create a picture.</p>
+                        <br>
+                        <p><em>Technical explanations will be in black. <span class="artistic-text">Artistic explanations will be in blue.</span></em></p>
+                    </section>
+
                     <section id="litebrite-what-is-it">
                         <h3>WHAT IS IT</h3>
-                        <p>Details coming soon.</p>
+                        <p>Illumination Lite-Rite is a technical art installation that uses a raspberry pi, infrared light, and a camera to achieve pattern detection from inside of a lite-brite.</p>
+                        <br>
+                        <p class="artistic-text">Illumination Lite-Rite plays on two themes: ancient alien technology and rituals. Across space and time, beings have always searched for meaning in the mundane. This often manifests in interesting ways — the mating calls of birds, the courtship displays between potential lovers, the burial rituals of elephants. For those looking from outside, these rituals can appear unusual and even absurd. Meaning is what you make of it. This art piece plays on that idea by requiring participants to complete the "ritual" of building one of four patterns (sigils) in the lite-brite and rewards them with a recording based off of the sigil chosen.</p>
+                        <br>
+                        <p>After having the idea for the install, I got connected to a larger art team to make this experience as part of a larger installation. I lead the creation of this experience, leading a team of three other engineers.</p>
                     </section>
+
                     <section id="litebrite-how-it-worked">
                         <h3>HOW IT WORKED</h3>
-                        <p>Details coming soon.</p>
+                        <p>Final design (highlight overview):</p>
+                        <iframe src="component-viewer.html" class="component-viewer-embed" title="LED Enclosure Component Viewer" scrolling="no"></iframe>
+                        <ul>
+                            <li>IR strip: with a mosfet to do background image subtraction</li>
+                            <li>Diffused RGB LED strip</li>
+                            <li>12V power supply</li>
+                            <li>Raspberry Pi 5</li>
+                        </ul>
+                        <br>
+                        <p>Decided early on that I did not want to use visible light and should use IR light for detection instead. By using IR light instead of visible light, we are reducing the amount of noise that can be detected by our camera system.</p>
                     </section>
+
                     <section id="litebrite-my-role">
                         <h3>MY ROLE</h3>
                         <p>Details coming soon.</p>
                     </section>
+
                     <section id="litebrite-outcome">
                         <h3>OUTCOME</h3>
                         <p>Details coming soon.</p>
@@ -286,10 +313,12 @@
                 ]},
                 { label: 'My role',   id: 'wieba-my-role' },
                 { label: 'Outcome',   id: 'wieba-outcome' },
+                { label: 'Credits',   id: 'wieba-credits' },
             ]
         },
         litebrite: {
             sections: [
+                { label: 'Context',       id: 'litebrite-context' },
                 { label: 'What is it',    id: 'litebrite-what-is-it' },
                 { label: 'How it worked', id: 'litebrite-how-it-worked' },
                 { label: 'My role',       id: 'litebrite-my-role' },
@@ -298,8 +327,8 @@
         }
     };
 
-    let activeProject = 'wieba';
-    let expandedParents = new Set(['wieba-how-it-worked']);
+    let activeProject = 'litebrite';
+    let expandedParents = new Set(['litebrite-how-it-worked']);
 
     const tabs      = document.querySelectorAll('.menu-item');
     const sidebar   = document.getElementById('projectSidebar');
@@ -392,8 +421,66 @@
     // Scroll spy
     pane.addEventListener('scroll', updateActiveSidebarItem);
 
+    // ── Custom scrollbar ────────────────────────────────────────────────────────
+    const scrollUpBtn   = document.querySelector('.scroll-up');
+    const scrollDownBtn = document.querySelector('.scroll-down');
+    const scrollThumb   = document.querySelector('.scroll-box-v');
+    const scrollTrack   = document.querySelector('.scroll-track-v');
+
+    function updateThumb() {
+        if (!scrollThumb || !scrollTrack) return;
+        const ratio      = pane.scrollTop / (pane.scrollHeight - pane.clientHeight);
+        const trackH     = scrollTrack.clientHeight - scrollThumb.clientHeight;
+        scrollThumb.style.top = (ratio * trackH) + 'px';
+    }
+
+    pane.addEventListener('scroll', updateThumb);
+
+    // Arrow buttons — hold to scroll continuously
+    function startScroll(dir) {
+        const step = () => { pane.scrollBy({ top: dir * 20 }); };
+        step();
+        const interval = setInterval(step, 80);
+        const stop = () => clearInterval(interval);
+        document.addEventListener('mouseup', stop, { once: true });
+    }
+
+    if (scrollUpBtn)   scrollUpBtn.addEventListener('mousedown',   () => startScroll(-1));
+    if (scrollDownBtn) scrollDownBtn.addEventListener('mousedown', () => startScroll(1));
+
+    // Click on track to jump
+    if (scrollTrack) {
+        scrollTrack.addEventListener('click', e => {
+            if (e.target === scrollThumb) return;
+            const rect  = scrollTrack.getBoundingClientRect();
+            const ratio = (e.clientY - rect.top) / rect.height;
+            pane.scrollTo({ top: ratio * (pane.scrollHeight - pane.clientHeight) });
+        });
+    }
+
+    // Drag thumb
+    if (scrollThumb) {
+        scrollThumb.addEventListener('mousedown', e => {
+            e.preventDefault();
+            const startY     = e.clientY;
+            const startTop   = pane.scrollTop;
+            const trackH     = scrollTrack.clientHeight - scrollThumb.clientHeight;
+            const scrollable = pane.scrollHeight - pane.clientHeight;
+
+            const onMove = e => {
+                const delta = (e.clientY - startY) / trackH * scrollable;
+                pane.scrollTop = startTop + delta;
+            };
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', () => {
+                document.removeEventListener('mousemove', onMove);
+            }, { once: true });
+        });
+    }
+
     // Init
     buildSidebar('wieba');
+    updateThumb();
     </script>
 </body>
 </html>
