@@ -116,7 +116,7 @@
                         <p>WIEBA was implemented as a distributed sensor network feeding a centralized physical display.</p>
 
                         <section id="wieba-sensors">
-                            <h4>SENSORS</h4>
+                            <h4>Sensors</h4>
                             <div class="photo-with-balloons" id="probeGallery">
                                 <div class="gallery-image-container">
                                     <img src="images/wieba/solder-job.png" alt="Solder job" class="gallery-image active" data-index="0">
@@ -155,7 +155,7 @@
                         </section>
 
                         <section id="wieba-calibration">
-                            <h4>OCCUPANCY ESTIMATION & CALIBRATION</h4>
+                            <h4>Occupancy estimation and calibration</h4>
                             <p>Through earlier experiments at a separate event, the team identified CO2 concentration as the strongest proxy for human presence compared to temperature, humidity or sound alone.</p>
                             <br>
                             <p>Initial CO2 data was used to estimate rough occupancy thresholds. Once on site, we conducted a live calibration period by:</p>
@@ -169,14 +169,14 @@
                         </section>
 
                         <section id="wieba-networking">
-                            <h4>NETWORKING & DEPLOYMENT CONSTRAINTS</h4>
+                            <h4>Networking and deployment constraints</h4>
                             <p>The original system design relied on a Meshtastic mesh network to transmit data between floors. During on-site testing, we quickly realized that the signal wasn't traveling very far through the concrete walls of the building.</p>
                             <br>
                             <p>We pivoted to using the hotel's WiFi network. While less exciting than intended, this decision prioritized successful deployment.</p>
                         </section>
 
                         <section id="wieba-fabrication">
-                            <h4>PHYSICAL DISPLAY & FABRICATION</h4>
+                            <h4>Physical display and fabrication</h4>
                             <p>The main display was constructed as a custom, bookcase-style plywood enclosure with an acrylic cover. I designed the display graphic in Inkscape. Addressable LEDs were mounted in each row. Cardboard baffles were used to segment and prevent light bleed. The display translated aggregated sensor data into an intuitive, glanceable representation of floor-by-floor occupancy.</p>
                         </section>
                     </section>
@@ -216,43 +216,100 @@
                     <p class="project-date">Summer 2026</p>
 
                     <section id="litebrite-context">
-                        <h4>CONTEXT</h4>
-                        <p>Lite-brite: a toy that consists of a light box and pegs. Small coloured pegs are inserted into the box and are black lit to create a picture.</p>
+                        <h3>CONTEXT</h3>
+                        <p>Lite-brite: a toy that consists of a light box and pegs. Small coloured pegs are inserted into the box and become black lit. Templates are provided with the toy, and the user fills them out to create a glowing picture.</p>
                         <br>
                         <p><em>Technical explanations will be in black. <span class="artistic-text">Artistic explanations will be in blue.</span></em></p>
+                        <iframe src="overview_image.html" class="component-viewer-embed" title="Illumination Lite-Rite Overview" scrolling="no"></iframe>
                     </section>
 
                     <section id="litebrite-what-is-it">
                         <h3>WHAT IS IT</h3>
-                        <p>Illumination Lite-Rite is a technical art installation that uses a raspberry pi, infrared light, and a camera to achieve pattern detection from inside of a lite-brite.</p>
+                        <p>Illumination Lite-Rite is a technical art installation that uses a raspberry pi, infrared light, and a camera to achieve automated pattern detection from inside of a lite-brite.</p>
                         <br>
-                        <p class="artistic-text">Illumination Lite-Rite plays on two themes: ancient alien technology and rituals. Across space and time, beings have always searched for meaning in the mundane. This often manifests in interesting ways — the mating calls of birds, the courtship displays between potential lovers, the burial rituals of elephants. For those looking from outside, these rituals can appear unusual and even absurd. Meaning is what you make of it. This art piece plays on that idea by requiring participants to complete the "ritual" of building one of four patterns (sigils) in the lite-brite and rewards them with a recording based off of the sigil chosen.</p>
+                        <p class="artistic-text">Illumination Lite-Rite plays on two themes: ancient alien technology and rituals. Across space and time, beings have always searched for meaning in the mundane. This often manifests in interesting ways - the mating calls of birds, the courtship displays between potential lovers, the burial rituals of elephants. For those looking from outside, these rituals can appear unusual and even absurd. Meaning is what you make of it. This art piece plays on that idea by requiring participants to complete the "ritual" of building one of four patterns (sigils) in the lite-brite and rewards them with a recording based off of the sigil chosen.</p>
                         <br>
-                        <p>After having the idea for the install, I got connected to a larger art team to make this experience as part of a larger installation. I lead the creation of this experience, leading a team of three other engineers.</p>
-                    </section>
-
-                    <section id="litebrite-how-it-worked">
-                        <h3>HOW IT WORKED</h3>
-                        <p>Final design (highlight overview):</p>
-                        <iframe src="component-viewer.html" class="component-viewer-embed" title="LED Enclosure Component Viewer" scrolling="no"></iframe>
-                        <ul>
-                            <li>IR strip: with a mosfet to do background image subtraction</li>
-                            <li>Diffused RGB LED strip</li>
-                            <li>12V power supply</li>
-                            <li>Raspberry Pi 5</li>
-                        </ul>
-                        <br>
-                        <p>Decided early on that I did not want to use visible light and should use IR light for detection instead. By using IR light instead of visible light, we are reducing the amount of noise that can be detected by our camera system.</p>
+                        <p class="artistic-text">This install is a part of a larger art experience that was commissioned by an art festival. A transmission recording device prompted participants to record wisdom or advice that they wanted to transmit, categorized by the four sigils. Upon successfully completing the Lite-Rite ritual, a random recording from that sigil is played.</p>
                     </section>
 
                     <section id="litebrite-my-role">
                         <h3>MY ROLE</h3>
-                        <p>Details coming soon.</p>
+                        <p>I led the creation of the transmission recording to playback experience, leading a team of four other engineers to build the transmission recorder and other playback installations. I personally worked on this Lite-Rite install.</p>
+                    </section>
+
+                    <section id="litebrite-how-it-worked">
+                        <h3>HOW IT WORKED</h3>
+
+                        <section id="litebrite-hardware-overview">
+                            <h4>Final hardware design overview:</h4>
+                            <iframe src="component-viewer.html" class="component-viewer-embed" title="LED Enclosure Component Viewer" scrolling="no"></iframe>
+                        </section>
+
+                        <section id="litebrite-design-highlights">
+                            <h4>Design highlights:</h4>
+                            <ul>
+                                <li>I made the decision early on to use IR light and a camera to achieve peg detection. A filled peg hole would reflect the IR light from the strip back into the camera. An unfilled hole would not. I reasoned that using IR light would remove any ambient room "noise" and improve my signal.</li>
+                                <li>Background image subtraction: a concern of mine was that any background IR light would be detected and cause false positives. By flashing the IR light and subtracting the two images, any background light should be subtracted (as it would be consistent between the two images). Considering this, I chose to use a 940 nm wavelength LED strip, as that wavelength is not visible to the human eye.</li>
+                                <li>Camera: I used the raspberry pi module camera 3, specifically the model with infrared and ultra wide angle field of view.</li>
+                                <li>Lite-brite pegs: I sanded the tips of the pegs to improve the reflection of IR light and make them more visible to the camera.</li>
+                            </ul>
+                            <br>
+                            <figure class="project-figure">
+                                <img src="images/litebrite/wire harness_final.png" alt="Wire harness diagram" class="project-image">
+                                <figcaption>Wire harness diagram for the lite-brite.</figcaption>
+                            </figure>
+                        </section>
+
+                        <section id="litebrite-detection-system">
+                            <h4>Detection system:</h4>
+                            <p>I designed the detection system - the state machine architecture, calibration methods, and IR sensing strategy. Python implementation was done with Claude Code under my direction.</p>
+                            <br>
+                            <figure class="project-figure">
+                                <img src="images/litebrite/fsm_flowchart.png" alt="Finite state machine flowchart" class="project-image">
+                            </figure>
+                            <br>
+                            <p>Illumination Lite-Rite runs a six-state supervisor (auto_loop) layered on top of a continuous IR differential detector.</p>
+                            <br>
+                            <p><strong>SLEEP</strong> — Coarse IR scan every 4s to check for any activity. Wakes to IDENTIFY once 3+ pegs are detected and 65% of those pegs belong to the same candidate template.</p>
+                            <br>
+                            <p><strong>IDENTIFY</strong> — Faster polling (every second). This state is for the machine to identify which template is being used. Locking onto a template requires passing two conditions: most of the pegs belong to the suspected template and at least three pegs belong only to the suspected template and not to the runner up. Continued progress resets an inactivity timer, so participants filling out a region shared between templates does not time out before getting to the disambiguating pegs. Upon detection, the RGB strip is set to white.</p>
+                            <br>
+                            <p><strong>DETECT</strong> — Running the detect_loop. Uses the fine-grain peg detecting features: IR image subtraction, parallax-correction, adaptive thresholds, etc (covered in more detail in the next section). Requires 10 consecutive matching frames before declaring a win.</p>
+                            <br>
+                            <p><strong>WIN</strong> — Fun success LED sequence is played. The pi then sends a HTTP POST request to another computer on the same LAN that handles playing the recordings. A variable called armed is set to false here, meaning the board is full of pegs.</p>
+                            <br>
+                            <p><strong>CLEAR_WAIT</strong> — Polls every second for the peg count to lower (meaning the board is being reset) or for an inactivity timeout. If the board is cleared the armed variable is set to true. If not, it remains false.</p>
+                            <br>
+                            <p><strong>COOLDOWN</strong> — A 5 second cooldown state before returning to SLEEP.</p>
+                        </section>
+
+                        <section id="litebrite-detecting-pegs">
+                            <h4>Detecting pegs:</h4>
+                            <p>Figuring out how to detect the pegs was a fun challenge. A few different strategies were used simultaneously.</p>
+                            <br>
+                            <p><strong>Background image subtraction through IR differencing:</strong> covered in the hardware features section.</p>
+                            <br>
+                            <p><strong>Parallax-corrected MAX-window search:</strong> The physical camera position was constrained by the lite-brite housing such that the camera and grid were about 15cm away from each other. This meant that the pegs further away from the center came in at an angle from the camera's field of view. Rather than taking pixel values only at the hole location, a small radius around the hole node point was taken and scanned for the maximum brightness value found.</p>
+                            <br>
+                            <p><strong>Adaptive per-hole thresholds:</strong> The IR strip unevenly lights the grid, meaning some spots are overexposed and some are underexposed. Each hole's threshold is computed from its local background. The IR differential readings of nearby holes are taken and the 30th percentile (plus a margin) is taken as the filled-hole-threshold.</p>
+                            <br>
+                            <p><strong>Hysteresis debounce:</strong> There are different thresholds for a hole to read as filled or unfilled. A higher threshold is required to flip a filled hole back to an unfilled one. This prevents rapid state toggling for holes/pegs that are at the boundary.</p>
+                        </section>
+
+                        <section id="litebrite-template-creation">
+                            <h4>Template creation:</h4>
+                            <p>I took the measurements of the grid of my lite-brite and used Claude Code to create a .svg template generator that took png vector image inputs and mapped them to the grid. I laser cut the four sigil templates out of plywood at Noisebridge.</p>
+                        </section>
                     </section>
 
                     <section id="litebrite-outcome">
                         <h3>OUTCOME</h3>
-                        <p>Details coming soon.</p>
+                        <p>Learned a lot and had a lot of fun. I ended up reducing the amount of pegs required to get a WIN condition as participants were not patient enough to complete the whole template. This was an improvement based on user feedback.</p>
+                    </section>
+
+                    <section id="litebrite-credits">
+                        <h3>CREDITS</h3>
+                        <p>Nathan, engineering consulting and general creative and technical support. Graydon, led the sound output of the experience. Tatyana, overall project lead. Paul, transmission recorder. Tim, electronic resources and networking specialist. Richard, technical consultant.</p>
                     </section>
                 </div>
 
@@ -306,10 +363,10 @@
             sections: [
                 { label: 'What is it',    id: 'wieba-what-is-it' },
                 { label: 'How it worked', id: 'wieba-how-it-worked', children: [
-                    { label: 'Sensors',        id: 'wieba-sensors' },
-                    { label: 'Calibration',    id: 'wieba-calibration' },
-                    { label: 'Networking',     id: 'wieba-networking' },
-                    { label: 'Fabrication',    id: 'wieba-fabrication' },
+                    { label: 'Sensors',                          id: 'wieba-sensors' },
+                    { label: 'Occupancy estimation',             id: 'wieba-calibration' },
+                    { label: 'Networking and deployment',        id: 'wieba-networking' },
+                    { label: 'Physical display and fabrication', id: 'wieba-fabrication' },
                 ]},
                 { label: 'My role',   id: 'wieba-my-role' },
                 { label: 'Outcome',   id: 'wieba-outcome' },
@@ -320,9 +377,16 @@
             sections: [
                 { label: 'Context',       id: 'litebrite-context' },
                 { label: 'What is it',    id: 'litebrite-what-is-it' },
-                { label: 'How it worked', id: 'litebrite-how-it-worked' },
                 { label: 'My role',       id: 'litebrite-my-role' },
+                { label: 'How it worked', id: 'litebrite-how-it-worked', children: [
+                    { label: 'Hardware overview',  id: 'litebrite-hardware-overview' },
+                    { label: 'Design highlights',  id: 'litebrite-design-highlights' },
+                    { label: 'Detection system',   id: 'litebrite-detection-system' },
+                    { label: 'Detecting pegs',     id: 'litebrite-detecting-pegs' },
+                    { label: 'Template creation',  id: 'litebrite-template-creation' },
+                ]},
                 { label: 'Outcome',       id: 'litebrite-outcome' },
+                { label: 'Credits',       id: 'litebrite-credits' },
             ]
         }
     };

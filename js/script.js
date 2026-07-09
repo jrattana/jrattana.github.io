@@ -543,10 +543,10 @@ function initProjectsSidebar() {
         wieba: { sections: [
             { label: 'What is it',    id: 'wieba-what-is-it' },
             { label: 'How it worked', id: 'wieba-how-it-worked', children: [
-                { label: 'Sensors',     id: 'wieba-sensors' },
-                { label: 'Calibration', id: 'wieba-calibration' },
-                { label: 'Networking',  id: 'wieba-networking' },
-                { label: 'Fabrication', id: 'wieba-fabrication' },
+                { label: 'Sensors',                          id: 'wieba-sensors' },
+                { label: 'Occupancy estimation',             id: 'wieba-calibration' },
+                { label: 'Networking and deployment',        id: 'wieba-networking' },
+                { label: 'Physical display and fabrication', id: 'wieba-fabrication' },
             ]},
             { label: 'My role', id: 'wieba-my-role' },
             { label: 'Outcome', id: 'wieba-outcome' },
@@ -555,14 +555,21 @@ function initProjectsSidebar() {
         litebrite: { sections: [
             { label: 'Context',       id: 'litebrite-context' },
             { label: 'What is it',    id: 'litebrite-what-is-it' },
-            { label: 'How it worked', id: 'litebrite-how-it-worked' },
             { label: 'My role',       id: 'litebrite-my-role' },
+            { label: 'How it worked', id: 'litebrite-how-it-worked', children: [
+                { label: 'Hardware overview',  id: 'litebrite-hardware-overview' },
+                { label: 'Design highlights',  id: 'litebrite-design-highlights' },
+                { label: 'Detection system',   id: 'litebrite-detection-system' },
+                { label: 'Detecting pegs',     id: 'litebrite-detecting-pegs' },
+                { label: 'Template creation',  id: 'litebrite-template-creation' },
+            ]},
             { label: 'Outcome',       id: 'litebrite-outcome' },
+            { label: 'Credits',       id: 'litebrite-credits' },
         ]}
     };
 
     let activeProject    = 'wieba';
-    let expandedParents  = new Set(['wieba-how-it-worked']);
+    let expandedParents  = new Set(['wieba-how-it-worked', 'litebrite-how-it-worked']);
     const tabs           = document.querySelectorAll('.menu-item');
 
     function buildSidebar(projectKey) {
@@ -1139,7 +1146,11 @@ async function loadPage(url, pushState = true) {
 
 window.addEventListener('message', e => {
     if (e.data && e.data.type === 'viewer-height') {
-        const iframe = document.querySelector('.component-viewer-embed');
-        if (iframe) iframe.style.height = e.data.height + 'px';
+        const iframes = document.querySelectorAll('.component-viewer-embed');
+        iframes.forEach(iframe => {
+            if (iframe.contentWindow === e.source) {
+                iframe.style.height = e.data.height + 'px';
+            }
+        });
     }
 });
