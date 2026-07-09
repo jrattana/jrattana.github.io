@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Component Viewer</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: fit-content; overflow: hidden; }
+body { background: transparent; font-family: 'Segoe UI', system-ui, sans-serif; }
+#viewer-container { position: relative; width: fit-content; }
+#main-image { display: block; max-width: 100%; user-select: none; -webkit-user-drag: none; }
+.hotspot { position: absolute; width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.9); background: rgba(108,92,231,0.5); transform: translate(-50%,-50%); cursor: pointer; transition: background 0.15s, transform 0.15s; z-index: 10; }
+.hotspot::after { content: ''; position: absolute; inset: 2.5px; border-radius: 50%; background: white; opacity: 0.9; }
+.hotspot:hover, .hotspot.active { background: rgba(108,92,231,0.85); transform: translate(-50%,-50%) scale(1.35); }
+.hotspot::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1.5px solid rgba(108,92,231,0.6); animation: pulse 2s ease-out infinite; }
+@keyframes pulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(2); opacity: 0; } }
+.label-popup { position: absolute; background: #ffffff; border-radius: 12px; padding: 14px 18px; width: 200px; pointer-events: none; z-index: 20; box-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10); opacity: 0; transform: scale(0.96); transition: opacity 0.15s, transform 0.15s; }
+.label-popup.visible { opacity: 1; transform: scale(1); pointer-events: auto; }
+.label-popup-close { position: absolute; top: 8px; right: 10px; width: 18px; height: 18px; border: none; background: none; cursor: pointer; color: #aaaacc; font-size: 14px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.1s, color 0.1s; }
+.label-popup-close:hover { background: #f0f0f8; color: #6b5ce7; }
+.label-popup .diamond { font-size: 0.75rem; color: #7c6fcd; margin-bottom: 5px; display: block; }
+.label-popup h3 { font-size: 0.82rem; font-weight: 700; color: #6b5ce7; margin-bottom: 6px; line-height: 1.3; font-family: 'Courier New', monospace; padding-right: 16px; }
+.label-popup p { font-size: 0.78rem; color: #222; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div id="viewer-container">
+  <img id="main-image" src="images/litebrite/IMG_3377.jpeg" alt="LED Enclosure">
+</div>
+<script>
+const COMPONENTS = [
+  {
+    "id": 2,
+    "name": "Mosfet",
+    "desc": "Electronically controllable gate to turn off and on the IR strip.",
+    "x": 29.61111111111111,
+    "y": 61.111111111111114,
+    "color": "#7070ff"
+  },
+  {
+    "id": 4,
+    "name": "Logic Level Converter - pi to RBG strip",
+    "desc": "Converts the 5V data signal from the pi to 12V for the LED strip.",
+    "x": 31.61111111111111,
+    "y": 54.2962962962963,
+    "color": "#7070ff"
+  },
+  {
+    "id": 7,
+    "name": "Diffused, addressable RBG strip",
+    "desc": "Provide ambient lighting + backlighting to peg designs. Changes colours/patterns to signal detection/completion.",
+    "x": 72.72222222222223,
+    "y": 75.03703703703704,
+    "color": "#00cc88"
+  },
+  {
+    "id": 8,
+    "name": "Raspberry pi 5",
+    "desc": "Controls the camera and light strips. Runs the script.",
+    "x": 27.62119503945885,
+    "y": 48.6283352123262,
+    "color": "#ff9933"
+  },
+  {
+    "id": 9,
+    "name": "Raspberry pi camera module 3 + IR bandpass filter",
+    "desc": "Wide angle infrared lens camera with a 940Nm bandpass filter custom mounted to the lens.",
+    "x": 50.84554678692221,
+    "y": 47.576099210822996,
+    "color": "#cc66ff"
+  },
+  {
+    "id": 10,
+    "name": "12V to 5V 5A power module",
+    "desc": "Dropping power from 12V to 5V 5A to supply to the pi.",
+    "x": 51.433121019108285,
+    "y": 32.59023354564756,
+    "color": "#ff6688"
+  },
+  {
+    "id": 12,
+    "name": "940 Nm IR strip",
+    "desc": "Flashes on and off to achieve background image subtraction for peg detection.",
+    "x": 37.5,
+    "y": 43.48148148148148,
+    "color": "#ff4444"
+  }
+];
+const mainImage = document.getElementById('main-image');
+const viewerContainer = document.getElementById('viewer-container');
+let activePopup = null;
+
+function render() {
+  viewerContainer.querySelectorAll('.hotspot,.label-popup').forEach(el => el.remove());
+  COMPONENTS.forEach(comp => {
+    const dot = document.createElement('div');
+    dot.className = 'hotspot';
+    dot.style.left = comp.x + '%';
+    dot.style.top  = comp.y + '%';
+    dot.style.borderColor = comp.color || '#fff';
+    const popup = document.createElement('div');
+    popup.className = 'label-popup';
+    popup.innerHTML = '<button class="label-popup-close" title="Close">✕</button><span class="diamond">❖</span><h3>' + comp.name + '</h3><p>' + comp.desc + '</p>';
+    popup.querySelector('.label-popup-close').addEventListener('click', e => { e.stopPropagation(); closeAll(); });
+    dot.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = popup.classList.contains('visible');
+      closeAll();
+      if (!open) { positionPopup(popup, dot); popup.classList.add('visible'); dot.classList.add('active'); activePopup = {popup, dot}; }
+    });
+    viewerContainer.appendChild(dot);
+    viewerContainer.appendChild(popup);
+  });
+}
+
+function positionPopup(popup, dot) {
+  const ir = mainImage.getBoundingClientRect(), cr = viewerContainer.getBoundingClientRect();
+  const dotX = parseFloat(dot.style.left)/100 * ir.width  + (ir.left - cr.left);
+  const dotY = parseFloat(dot.style.top) /100 * ir.height + (ir.top  - cr.top);
+  const PW=210, PH=120, GAP=16;
+  let left = (cr.width - dotX >= PW+GAP) ? dotX+GAP : (dotX >= PW+GAP) ? dotX-PW-GAP : Math.max(4, Math.min(dotX-PW/2, cr.width-PW-4));
+  let top  = Math.max(4, Math.min(dotY-PH/2, cr.height-PH-4));
+  popup.style.left = left+'px'; popup.style.top = top+'px';
+}
+
+function closeAll() {
+  viewerContainer.querySelectorAll('.label-popup').forEach(p => p.classList.remove('visible'));
+  viewerContainer.querySelectorAll('.hotspot').forEach(d => d.classList.remove('active'));
+  activePopup = null;
+}
+document.addEventListener('click', e => { if (!viewerContainer.contains(e.target)) closeAll(); });
+window.addEventListener('resize', () => { if (activePopup) positionPopup(activePopup.popup, activePopup.dot); });
+
+function reportHeight() {
+  const h = mainImage.offsetHeight;
+  window.parent.postMessage({ type: 'viewer-height', height: h }, '*');
+}
+mainImage.complete ? (render(), reportHeight()) : mainImage.addEventListener('load', () => { render(); reportHeight(); });
+window.addEventListener('resize', reportHeight);
+</script>
+</body>
+</html>

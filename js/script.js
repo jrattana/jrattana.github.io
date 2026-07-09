@@ -520,15 +520,166 @@ function initMainBalloon() {
 function initSubpageWindow() {
     const pageWindow = document.querySelector('.page-window');
     if (!pageWindow) return;
-    
+
     // Initialize scrollbars for the page window
     initScrollbars(pageWindow);
-    
+
     // Initialize image galleries
     initImageGalleries();
-    
+
     // Initialize media carousel
     initMediaCarousel();
+
+    // Initialize projects sidebar if on projects page
+    initProjectsSidebar();
+}
+
+function initProjectsSidebar() {
+    const sidebar = document.getElementById('projectSidebar');
+    const pane    = document.getElementById('projectPane');
+    if (!sidebar || !pane) return;
+
+    const PROJECTS = {
+        wieba: { sections: [
+            { label: 'What is it',    id: 'wieba-what-is-it' },
+            { label: 'How it worked', id: 'wieba-how-it-worked', children: [
+                { label: 'Sensors',                          id: 'wieba-sensors' },
+                { label: 'Occupancy estimation',             id: 'wieba-calibration' },
+                { label: 'Networking and deployment',        id: 'wieba-networking' },
+                { label: 'Physical display and fabrication', id: 'wieba-fabrication' },
+            ]},
+            { label: 'My role', id: 'wieba-my-role' },
+            { label: 'Outcome', id: 'wieba-outcome' },
+            { label: 'Credits', id: 'wieba-credits' },
+        ]},
+        litebrite: { sections: [
+            { label: 'Context',       id: 'litebrite-context' },
+            { label: 'What is it',    id: 'litebrite-what-is-it' },
+            { label: 'My role',       id: 'litebrite-my-role' },
+            { label: 'How it worked', id: 'litebrite-how-it-worked', children: [
+                { label: 'Hardware overview',  id: 'litebrite-hardware-overview' },
+                { label: 'Design highlights',  id: 'litebrite-design-highlights' },
+                { label: 'Detection system',   id: 'litebrite-detection-system' },
+                { label: 'Detecting pegs',     id: 'litebrite-detecting-pegs' },
+                { label: 'Template creation',  id: 'litebrite-template-creation' },
+            ]},
+            { label: 'Outcome',       id: 'litebrite-outcome' },
+            { label: 'Credits',       id: 'litebrite-credits' },
+        ]}
+    };
+
+    let activeProject    = 'wieba';
+    let expandedParents  = new Set(['wieba-how-it-worked', 'litebrite-how-it-worked']);
+    const tabs           = document.querySelectorAll('.menu-item');
+
+    function buildSidebar(projectKey) {
+        sidebar.innerHTML = '';
+        PROJECTS[projectKey].sections.forEach(sec => {
+            const btn = document.createElement('button');
+            btn.className  = 'sidebar-item' + (sec.children ? ' has-children' : '');
+            btn.dataset.id = sec.id;
+            btn.innerHTML = '<span class="sidebar-arrow">▶</span> ' + sec.label;
+            btn.addEventListener('click', () => {
+                if (sec.children) {
+                    expandedParents.has(sec.id) ? expandedParents.delete(sec.id) : expandedParents.add(sec.id);
+                    buildSidebar(projectKey);
+                }
+                scrollToSection(sec.id);
+            });
+            sidebar.appendChild(btn);
+
+            if (sec.children && expandedParents.has(sec.id)) {
+                sec.children.forEach(child => {
+                    const cbtn = document.createElement('button');
+                    cbtn.className  = 'sidebar-item sidebar-child';
+                    cbtn.dataset.id = child.id;
+                    cbtn.innerHTML = '<span class="sidebar-arrow">▶</span> ' + child.label;
+                    cbtn.addEventListener('click', () => scrollToSection(child.id));
+                    sidebar.appendChild(cbtn);
+                });
+            }
+        });
+        updateActiveSidebarItem();
+    }
+
+    function scrollToSection(id) {
+        const target = document.getElementById(id);
+        if (target) pane.scrollTo({ top: target.offsetTop - 12, behavior: 'smooth' });
+    }
+
+    function updateActiveSidebarItem() {
+        sidebar.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+        let current = null;
+        pane.querySelectorAll('section[id]').forEach(sec => {
+            if (sec.offsetTop - pane.scrollTop <= pane.clientHeight * 0.4) current = sec.id;
+        });
+        if (current) {
+            const match = sidebar.querySelector(`[data-id="${current}"]`);
+            if (match) match.classList.add('active');
+        }
+    }
+
+    function switchProject(key) {
+        activeProject   = key;
+        expandedParents = new Set([key + '-how-it-worked']);
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.project === key));
+        pane.querySelectorAll('.project-content').forEach(el => {
+            el.classList.toggle('hidden', el.dataset.project !== key);
+        });
+        pane.scrollTop = 0;
+        buildSidebar(key);
+    }
+
+    tabs.forEach(tab => tab.addEventListener('click', () => switchProject(tab.dataset.project)));
+    pane.addEventListener('scroll', updateActiveSidebarItem);
+
+    // Custom scrollbar
+    const scrollUpBtn   = document.querySelector('.scroll-up');
+    const scrollDownBtn = document.querySelector('.scroll-down');
+    const scrollThumb   = document.querySelector('.scroll-box-v');
+    const scrollTrack   = document.querySelector('.scroll-track-v');
+
+    function updateThumb() {
+        if (!scrollThumb || !scrollTrack) return;
+        const ratio  = pane.scrollTop / (pane.scrollHeight - pane.clientHeight);
+        const trackH = scrollTrack.clientHeight - scrollThumb.clientHeight;
+        scrollThumb.style.top = (ratio * trackH) + 'px';
+    }
+    pane.addEventListener('scroll', updateThumb);
+
+    function startScroll(dir) {
+        const step = () => pane.scrollBy({ top: dir * 20 });
+        step();
+        const interval = setInterval(step, 80);
+        document.addEventListener('mouseup', () => clearInterval(interval), { once: true });
+    }
+    if (scrollUpBtn)   scrollUpBtn.addEventListener('mousedown',   () => startScroll(-1));
+    if (scrollDownBtn) scrollDownBtn.addEventListener('mousedown', () => startScroll(1));
+
+    if (scrollTrack) {
+        scrollTrack.addEventListener('click', e => {
+            if (e.target === scrollThumb) return;
+            const rect  = scrollTrack.getBoundingClientRect();
+            const ratio = (e.clientY - rect.top) / rect.height;
+            pane.scrollTo({ top: ratio * (pane.scrollHeight - pane.clientHeight) });
+        });
+    }
+
+    if (scrollThumb) {
+        scrollThumb.addEventListener('mousedown', e => {
+            e.preventDefault();
+            const startY     = e.clientY;
+            const startTop   = pane.scrollTop;
+            const trackH     = scrollTrack.clientHeight - scrollThumb.clientHeight;
+            const scrollable = pane.scrollHeight - pane.clientHeight;
+            const onMove = e => { pane.scrollTop = startTop + (e.clientY - startY) / trackH * scrollable; };
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', () => document.removeEventListener('mousemove', onMove), { once: true });
+        });
+    }
+
+    buildSidebar('litebrite');
+    updateThumb();
 }
 
 /* ============================================
@@ -992,3 +1143,14 @@ async function loadPage(url, pushState = true) {
         window.location.href = url;
     }
 }
+
+window.addEventListener('message', e => {
+    if (e.data && e.data.type === 'viewer-height') {
+        const iframes = document.querySelectorAll('.component-viewer-embed');
+        iframes.forEach(iframe => {
+            if (iframe.contentWindow === e.source) {
+                iframe.style.height = e.data.height + 'px';
+            }
+        });
+    }
+});
