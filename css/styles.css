@@ -19,19 +19,7 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Nunito';
-    src: url('../fonts/Exo2-VariableFont_wght.ttf') format('truetype');
-    font-weight: 100 900;
-    font-style: normal;
-}
 
-@font-face {
-    font-family: 'Nunito';
-    src: url('../fonts/Exo2-Italic-VariableFont_wght.ttf') format('truetype');
-    font-weight: 100 900;
-    font-style: italic;
-}
 
 :root {
     --black: #000000;
