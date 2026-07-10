@@ -2033,23 +2033,22 @@ video.carousel-item {
     letter-spacing: 0.05em;
 }
 
-/* Responsive: collapse sidebar on narrow windows */
-@media (max-width: 600px) {
+/* Responsive: hide sidebar on narrow windows */
+@media (max-width: 768px) {
     .project-sidebar {
-        width: 110px;
+        display: none;
     }
-    .sidebar-item {
-        font-size: 8px;
-        padding: 7px 8px;
-    }
-    .sidebar-item.sidebar-child {
-        padding-left: 14px;
-        font-size: 7px;
-    }
-    .project-tabs {
-        right: 20px;
+    .project-pane {
+        width: 100%;
     }
     .project-layout {
-        right: 20px;
+        right: 35px;
+        bottom: 20px;
+    }
+    .scrollbar-h {
+        display: none;
+    }
+    .resize-btn {
+        display: none;
     }
 }
