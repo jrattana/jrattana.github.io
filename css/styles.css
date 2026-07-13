@@ -1137,7 +1137,7 @@ body.subpage {
     background: #FFFFFF;
     border: 1px solid #FFFFFF;
     box-shadow: 1px 1px 0px #000000;
-    padding: 15px;
+    padding: 15px 40px;
     overflow-y: scroll;
     overflow-x: auto;
     z-index: 6;
@@ -1148,6 +1148,11 @@ body.subpage {
 
 .window-content::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
+}
+
+.about-content {
+    max-width: 70ch;
+    margin: 0 auto;
 }
 
 .window-content p {
@@ -1925,6 +1930,14 @@ video.carousel-item {
     font-style: italic;
 }
 
+.project-video {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 4px;
+    margin: 16px 0;
+}
+
 .sidebar-item.active .sidebar-arrow {
     color: #FFF;
 }
@@ -1954,7 +1967,7 @@ video.carousel-item {
     min-height: 0;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 20px;
+    padding: 20px 40px;
     scrollbar-width: none;
     background-color: #fff;
     color: #000;
@@ -1991,6 +2004,7 @@ video.carousel-item {
     font-size: 19px;
     color: #000;
     line-height: 1.6;
+    max-width: 70ch;
 }
 
 /* Title: Orbitron Bold 24pt → 32px */

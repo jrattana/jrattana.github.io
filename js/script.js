@@ -35,7 +35,8 @@ const playlist = [
     { file: 'songs/Stagefright - Down The Hill.mp3', title: 'Down The Hill', artist: 'Stagefright' },
     { file: 'songs/Stagefright - Pauline.mp3', title: 'Pauline', artist: 'Stagefright' },
     { file: 'songs/Thrown-Out Bones - Feel It In Your Bite.mp3', title: 'Feel It In Your Bite', artist: 'Thrown-Out Bones' },
-    { file: 'songs/Thrown-Out Bones - Hoodiladiloo.mp3', title: 'Hoodiladiloo', artist: 'Thrown-Out Bones' }
+    { file: 'songs/Thrown-Out Bones - Hoodiladiloo.mp3', title: 'Hoodiladiloo', artist: 'Thrown-Out Bones' },
+    { file: 'songs/Thrown-Out Bones - Go Down Peacefully.mp3', title: 'Go Down Peacefully', artist: 'Thrown-Out Bones' }
 ];
 
 // Band bios
@@ -57,15 +58,19 @@ function shuffleArray(array) {
     return shuffled;
 }
 
+const PLAYLIST_VERSION = playlist.length + ':' + playlist.map(t => t.file).join(',');
+
 // Get or create shuffled playlist (persists across pages in session)
 function getShuffledPlaylist() {
     const stored = sessionStorage.getItem('shuffledPlaylist');
-    if (stored) {
+    const storedVersion = sessionStorage.getItem('playlistVersion');
+    if (stored && storedVersion === PLAYLIST_VERSION) {
         return JSON.parse(stored);
     }
-    // First visit - shuffle and store
+    // Playlist changed or first visit - shuffle and store
     const shuffled = shuffleArray(playlist);
     sessionStorage.setItem('shuffledPlaylist', JSON.stringify(shuffled));
+    sessionStorage.setItem('playlistVersion', PLAYLIST_VERSION);
     return shuffled;
 }
 
@@ -563,6 +568,7 @@ function initProjectsSidebar() {
                 { label: 'Detecting pegs',     id: 'litebrite-detecting-pegs' },
                 { label: 'Template creation',  id: 'litebrite-template-creation' },
             ]},
+            { label: 'Demo',          id: 'litebrite-demo' },
             { label: 'Outcome',       id: 'litebrite-outcome' },
             { label: 'Credits',       id: 'litebrite-credits' },
         ]}
